@@ -31,12 +31,12 @@ def lockout_user_locally(user_list):
                 sys.stdout.write(f"Attempting to disable {user}.\n")
                 user_disablement = subprocess.run(f"pwpolicy -u {user} disableuser", shell=True, stdout=subprocess.PIPE,
                                                   stderr=subprocess.PIPE, env=env)
-                if "not found" in user_disablement.check_returncode():
-                    raise User_not_found
-                if "account is disabled" in subprocess.run(f"pwpolicy -u {user} getaccountpolicies"):
+                disablement_check = subprocess.run(f"pwpolicy -u {user} getaccountpolicies", shell=True,
+                                                   stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env)
+                if "not found" in user_disablement.stderr.decode():
+                    raise ValueError(f"{user} was not found.\n")
+                if "account is disabled" in disablement_check.stderr.decode():
                     sys.stdout.write(f"{user} disabled successfully.")
-            except User_not_found:
-                sys.stderr.write(f"{user} was not found.\n")
             except Exception:
                 sys.stderr.write(f"Failed to lock out {user}, error: {traceback.format_exc()}\n")
 

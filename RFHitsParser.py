@@ -1,8 +1,10 @@
-# Author: Travis Crotteau
-# Date: 20240710
-# Title: RFParser.py
-# Purpose: To parse incoming Recorded Future logs.  The script parses fields out of 
-# the hits field in the log.  Meant to be used with a playbook.
+"""
+Name: RFParser.py
+Description: To parse incoming Recorded Future logs.  The script parses fields out of 
+the hits field in the log.  Meant to be used with a playbook.
+Author: Travis Crotteau
+Date: 20240710
+"""
 
 def parse_fields(hits):
 
